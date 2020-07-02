@@ -86,8 +86,8 @@ namespace ConsoleApplication1
         ///<param name="password">The password used for connection, default "" </param>
         ///<param name="bufferSize">The size of the buffer used to send and receive message</param>
         ///<param name="verbose">Set verbose to false if you don't want to see server's message in the console</param>
-        public void Start(string ipAddressServer, int portServer, string password = "", int bufferSize = 8192,
-            bool verbose = true)
+        public void Start(string ipAddressServer, int portServer, string password = "", int bufferSize = 64500,
+            bool verbose = false)
         {
             _verbose = verbose;
             if (IsActive) Stop();
@@ -171,7 +171,7 @@ namespace ConsoleApplication1
 
                     // TODO try to remove a copy of data to save performance
                     byte[] data_send = header.Concat(data).ToArray();
-                    Debug.Log("ok");
+
                     _socket.BeginSendTo(data_send, 0, data_send.Length, SocketFlags.None, target, (ar) =>
                     {
                         var so = (State)ar.AsyncState;
@@ -479,7 +479,7 @@ namespace ConsoleApplication1
              * Message id = 201 answer to a connection request
              */
             var rcvString = Encoding.ASCII.GetString(so.Buffer, 0, nBytes);
-            Debug.Log(rcvString);
+
             if (!Message.IsMessage(rcvString))
             {
                 /*

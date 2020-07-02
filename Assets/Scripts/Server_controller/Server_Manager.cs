@@ -22,7 +22,7 @@ namespace Assets.Server_controller
 
         private int portNB;
 
-        public UdpSocket server;
+        public static UdpSocket server;
 
 
         public void StartServer()

@@ -25,8 +25,7 @@ public class controllerOmni : MonoBehaviour
     float z;
     public static string jsonMovement = "{\"move_forward\": \"0\", \"move_backwards\": \"0\", \"rotate_left\": \"0\", \"rotate_right\": \"0\"}";
     Movement robotMovement = JsonUtility.FromJson<Movement>(jsonMovement);
-
-    public UdpSocket server = new UdpSocket();
+    
 
     // Variables for detection
     private int _t = 0;
@@ -43,10 +42,7 @@ public class controllerOmni : MonoBehaviour
 
     private bool clearAccess = true;
 
-    private void Start()
-    {
-        server.Start("192.168.1.88", 50000, "test", verbose: true);
-    }
+
 
     // Update is called once per frame
     void Update()
@@ -54,11 +50,13 @@ public class controllerOmni : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && !cameraRunning)
         {
+            Debug.Log("Sending IMAGES has started");
             cameraRunning = true;
         }
 
         else if (Input.GetKeyDown(KeyCode.Space) && cameraRunning)
         {
+            Debug.Log("Sending IMAGES stopped");
             cameraRunning = false;
         }
 
@@ -81,7 +79,7 @@ public class controllerOmni : MonoBehaviour
             var bytes = snapCam.EncodeImage();
             if (bytes != null && bytes.Length > 0)
             {
-                server.SendImageTo("192.168.1.59", 50000, bytes);
+                Server_Manager.server.SendImageTo("192.168.1.59", 50000, bytes);
             }
         }
     }
@@ -198,10 +196,8 @@ public class controllerOmni : MonoBehaviour
         {
             Debug.Log(hit_right_backwards.distance);
         }
-
-
-        //envoyer message au controleur python 
         
+        //envoyer message au controleur python 
     }
 
 }
