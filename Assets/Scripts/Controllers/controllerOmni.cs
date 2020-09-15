@@ -133,45 +133,28 @@ public class controllerOmni : MonoBehaviour
         var left_ray_direction = transform.TransformDirection(Vector3.left) * rayDistance;
         var right_ray_direction = transform.TransformDirection(Vector3.right) * rayDistance;
         //Origines des rayons
-        Vector3 origine_forward_right = transform.position + transform.up * 0.8f + transform.forward * 1.2f;
-        Vector3 origine_forward_left = transform.position - transform.right * 0.6f + transform.up * 0.8f + transform.forward * 1.2f;
+        Vector3 origine_forward = transform.position + transform.up * 0.8f + transform.forward * 1.2f - transform.right * 0.3f;
         Vector3 origine_left = transform.position - transform.right * 0.9f + transform.up * 0.8f + transform.forward * 0.95f;
         Vector3 origine_right = transform.position + transform.right * 0.3f + transform.up * 0.8f + transform.forward * 0.95f;
-        Vector3 origine_left_backwards = transform.position - transform.right * 0.9f + transform.up * 0.8f + transform.forward * 0.4f;
-        Vector3 origine_right_backwards = transform.position+ transform.right * 0.3f + transform.up * 0.8f + transform.forward * 0.4f;
+        Vector3 origine_backwards = transform.position- transform.right * 0.3f + transform.up * 0.8f + transform.forward * 0.4f;
         //Affichage des rayons
-        Debug.DrawRay(origine_forward_right, forward_ray_direction, Color.red);
-        Debug.DrawRay(origine_forward_left, forward_ray_direction, Color.blue);
+        Debug.DrawRay(origine_forward, forward_ray_direction, Color.red);
         Debug.DrawRay(origine_left, left_ray_direction, Color.green);
         Debug.DrawRay(origine_right, right_ray_direction, Color.yellow);
-        Debug.DrawRay(origine_left_backwards, left_ray_direction, Color.magenta);
-        Debug.DrawRay(origine_right_backwards, right_ray_direction, Color.gray);
+        Debug.DrawRay(origine_backwards, right_ray_direction, Color.gray);
         //Détection d'objets pour chaque rayon
         // Physics.Raycast renvoie un booléen True si le rayon touche quelque chose
         //rayon rouge
-        bool forward_right_hit = Physics.Raycast(origine_forward_right, forward_ray_direction, out hit_forward_right, rayDistance, layers);
-        //rayon bleu
-        bool forward_left_hit = Physics.Raycast(origine_forward_left, forward_ray_direction, out hit_forward_left, rayDistance, layers);
+        bool forward_hit = Physics.Raycast(origine_forward, forward_ray_direction, out hit_forward_right, rayDistance, layers);
         //rayon vert
         bool left_hit = Physics.Raycast(origine_left, left_ray_direction, out hit_left, rayDistance, layers);
         //rayon jaune
         bool right_hit = Physics.Raycast(origine_right, right_ray_direction, out hit_right, rayDistance, layers);
-        //rayon magenta
-        bool left_hit_backwards = Physics.Raycast(origine_left_backwards, left_ray_direction, out hit_left_backwards, rayDistance, layers);
         //rayon gris
-        bool right_hit_backwards = Physics.Raycast(origine_right_backwards, right_ray_direction, out hit_right_backwards, rayDistance, layers);
+        bool backwards_hit = Physics.Raycast(origine_backwards, right_ray_direction, out hit_right_backwards, rayDistance, layers);
 
 
-        if (forward_right_hit)
-        {
-            Debug.Log(hit_forward_right.distance);
-            clearAccess = false;
-        }
-        else
-        {
-            clearAccess = true;
-        }
-        if (forward_left_hit)
+        if (forward_hit)
         {
             Debug.Log(hit_forward_right.distance);
             clearAccess = false;
@@ -188,11 +171,7 @@ public class controllerOmni : MonoBehaviour
         {
             Debug.Log(hit_right.distance);
         }
-        if (left_hit_backwards)
-        {
-            Debug.Log(hit_left_backwards.distance);
-        }
-        if (right_hit_backwards)
+        if (backwards_hit)
         {
             Debug.Log(hit_right_backwards.distance);
         }
