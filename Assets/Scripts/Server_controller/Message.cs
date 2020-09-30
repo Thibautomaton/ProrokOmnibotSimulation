@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ConsoleApplication1;
 using Newtonsoft.Json;
-
+using UnityEngine;
+using UnityEngine.UIElements;
 namespace Assets.Server_controller
 {
     public class Message
@@ -215,6 +215,24 @@ namespace Assets.Server_controller
             toReturn.Add("rotateLeft", rotateLeft ? "1" : "0");
             toReturn.Add("rotateRight", rotateRight ? "1" : "0");
             return JsonConvert.SerializeObject(toReturn);
+        }
+
+        public static Message CreationRobotObstacleMessage(float forwardObstacle = 100, float backwardsObstacle = 100,
+         float leftObstacle = 100, float rightObstacle = 100)
+        {
+            return new Message(103, createRobotObstacleText(forwardObstacle, backwardsObstacle, leftObstacle, rightObstacle));   
+        }
+
+        public static string createRobotObstacleText(float forwardObstacle = 100, float backwardsObstacle = 100,
+         float leftObstacle = 100, float rightObstacle = 100)
+        {
+            var toReturn = new Dictionary<string, float>();
+            toReturn.Add("forwardObstacle", forwardObstacle);
+            toReturn.Add("backwardsObstacle", backwardsObstacle);
+            toReturn.Add("leftObstacle", leftObstacle);
+            toReturn.Add("rightObstacle", rightObstacle);
+            Debug.Log(JsonConvert.SerializeObject(toReturn));
+            return JsonConvert.SerializeObject(toReturn);                                    
         }
     }
 }

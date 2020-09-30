@@ -14,7 +14,7 @@ using System.IO;
 using Assets.Server_controller;
 
 
-namespace ConsoleApplication1
+namespace Assets.Server_controller
 {
     public class UdpSocket
     {
@@ -221,6 +221,7 @@ namespace ConsoleApplication1
         {
             var target = new IPEndPoint(IPAddress.Parse(targetIp), targetPort);
             SendToProcess(target, text);
+            Debug.Log(text);
         }
 
         /// <summary>

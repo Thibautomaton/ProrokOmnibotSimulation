@@ -2,8 +2,8 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
-using ConsoleApplication1;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Assets.Server_controller
 {
@@ -38,6 +38,7 @@ namespace Assets.Server_controller
                     status_label.text = "Online";
                     status_label.color = Color.green;
                     controllerOmni.isServerActive = true;
+                    
                 }
             }
         }
