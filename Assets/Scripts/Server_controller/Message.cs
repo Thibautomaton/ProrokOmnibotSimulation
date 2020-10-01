@@ -217,6 +217,10 @@ namespace Assets.Server_controller
             return JsonConvert.SerializeObject(toReturn);
         }
 
+        
+        /*
+         * This method creates a Message from sensors data in order to send it to Python controller.
+         */
         public static Message CreationRobotObstacleMessage(float forwardObstacle = 100, float backwardsObstacle = 100,
          float leftObstacle = 100, float rightObstacle = 100)
         {

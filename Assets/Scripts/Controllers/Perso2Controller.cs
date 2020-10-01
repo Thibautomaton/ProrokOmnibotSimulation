@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
+ * This class manages "Claude" behaviour and his animation.
+ */
 public class Perso2Controller : MonoBehaviour
 {
     //var rotate :
@@ -54,9 +56,6 @@ public class Perso2Controller : MonoBehaviour
                 anim.SetBool("backwards", false);
             }
         }
-
-
-
 
         void Rotate()
         {

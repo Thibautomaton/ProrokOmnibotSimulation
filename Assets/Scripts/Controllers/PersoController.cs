@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
+ * This class manages "Frank" behaviour and his animation.
+ */
 public class PersoController : MonoBehaviour
 {
 

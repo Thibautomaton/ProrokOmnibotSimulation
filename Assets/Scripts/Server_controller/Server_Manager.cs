@@ -16,29 +16,28 @@ namespace Assets.Server_controller
         public Text status_label;
         public Text server_port_label;
 
-
         private const int PortMin = 1000;
         private const int PortMax = 100000;
-
         private int portNB;
 
         public static UdpSocket server;
-
-
+        
         public void StartServer()
         {
-            server = new UdpSocket();
-            if (CheckIp(IP_input.text) && CheckPort(port_input.text))
+            if (!controllerOmni.isServerActive)
             {
-                server.Start(IP_input.text, portNB, pwd_input.text);
-                if (CheckServerIsRunning())
+                server = new UdpSocket();
+                if (CheckIp(IP_input.text) && CheckPort(port_input.text))
                 {
-                    server_ip_label.text = server_ip_label.text + " " + IP_input.text;
-                    server_port_label.text = server_port_label.text + " " + port_input.text;
-                    status_label.text = "Online";
-                    status_label.color = Color.green;
-                    controllerOmni.isServerActive = true;
-                    
+                    server.Start(IP_input.text, portNB, pwd_input.text);
+                    if (CheckServerIsRunning())
+                    {
+                        server_ip_label.text = server_ip_label.text + " " + IP_input.text;
+                        server_port_label.text = server_port_label.text + " " + port_input.text;
+                        status_label.text = "Online";
+                        status_label.color = Color.green;
+                        controllerOmni.isServerActive = true;
+                    }
                 }
             }
         }

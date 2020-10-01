@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/*
+ * This class manages the main camera behaviour * 
+*/
 public class controllerCamera : MonoBehaviour
 {
     // Start is called before the first frame update

@@ -8,6 +8,15 @@ using Assets.Server_controller;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * This class manages the robot behaviour :
+ *     - movement
+ *     - rotation
+ *     - images sending to python part
+ *
+ * movement and rotation functions receive data from the python controller about how they should behave.
+ */
+
 public class controllerOmni : MonoBehaviour
 {
     // isServerActive check if server is online
@@ -15,6 +24,8 @@ public class controllerOmni : MonoBehaviour
     public GameObject robot;
     public float rotationSpeed = 10;
     public float speed = 10;
+    
+    // jsonMovement contains the data about robot's movements and rotation
     public static string jsonMovement = "{\"move_forward\": \"0\", \"move_backwards\": \"0\", \"rotate_left\": \"0\", \"rotate_right\": \"0\"}";
     Movement robotMovement;
     
@@ -22,10 +33,10 @@ public class controllerOmni : MonoBehaviour
     // Variables for detection
     private bool cameraRunning = false;
     public SnapShotCamera snapCam;
-
-    // Update is called once per frame
+    
     void Update()
     {
+        // images are sent each frame if the user pressed space bar and if the snapshot camera is running
         if (Input.GetKeyDown(KeyCode.Space) && !cameraRunning)
         {
             Debug.Log("Sending IMAGES has started");
@@ -64,7 +75,8 @@ public class controllerOmni : MonoBehaviour
             }
         }
     }
-
+    
+    // Forward applies robot's movement depending on data received
     void Forward(int forward, int backwards)
     {
         if (forward == 1)
@@ -79,6 +91,7 @@ public class controllerOmni : MonoBehaviour
         }
     }
 
+    // Rotate applies robot's rotation depending on data received    
     void Rotate(int left, int right)
     {
         if (left == 1)
@@ -102,5 +115,4 @@ public class Movement
     public int move_backwards;
     public int rotate_left;
     public int rotate_right;
-
 }

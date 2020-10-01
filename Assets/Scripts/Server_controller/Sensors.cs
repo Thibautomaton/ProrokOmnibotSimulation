@@ -7,18 +7,21 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+/*
+ * This class manages robot's sensors.
+ * 4 sensors are created and detect obstacles the robot could collide with.
+ * Data (distance between nearest obstacle) collected by sensors is gathered in the dictionnary sensorsDic.
+ * Then sent to Python controller.
+ */
+
 namespace Assets.Server_controller
 {
-
     public class Sensors : MonoBehaviour
     {
         public GameObject robot;
         [SerializeField] private LayerMask layers;        
         public static Dictionary<string, float> sensorsDic = new Dictionary<string, float>();
         public UdpSocket serverSensors;
-
-
-    //     public static Dictionnary<string, string> obstacleDic = new Dictionnary<string, string>();
         void Start()
         {
             serverSensors = new UdpSocket();
@@ -41,30 +44,30 @@ namespace Assets.Server_controller
             RaycastHit hit_right;
             RaycastHit hit_backwards;
 
-            // Directions des raycast : 
+            // Raycast's directions: 
             var forward_ray_direction = transform.TransformDirection(Vector3.forward) * 100;
             var left_ray_direction = transform.TransformDirection(Vector3.left) * 100;
             var right_ray_direction = transform.TransformDirection(Vector3.right) * 100;
 
-            //Origines des rayons
+            // Raycast's origins :
             Vector3 origine_forward = transform.position + transform.up * 0.8f + transform.forward * 1.2f - transform.right * 0.3f;
             Vector3 origine_left = transform.position - transform.right * 0.9f + transform.up * 0.8f + transform.forward * 0.95f;
             Vector3 origine_right = transform.position + transform.right * 0.3f + transform.up * 0.8f + transform.forward * 0.95f;
             Vector3 origine_backwards = transform.position- transform.right * 0.3f + transform.up * 0.8f + transform.forward * 0.4f;
 
-            //Affichage des rayons
+            // Display each raycast with different colors
             Debug.DrawRay(origine_forward, forward_ray_direction, Color.red);
             Debug.DrawRay(origine_left, left_ray_direction, Color.green);
             Debug.DrawRay(origine_right, right_ray_direction, Color.yellow);
             Debug.DrawRay(origine_backwards, right_ray_direction, Color.gray);
 
-            //rayon rouge
+            // red raycast
             bool forward_hit = Physics.Raycast(origine_forward, forward_ray_direction, out hit_forward, 100, layers);
-            //rayon vert
+            // green raycast
             bool left_hit = Physics.Raycast(origine_left, left_ray_direction, out hit_left, 100, layers);
-            //rayon jaune
+            // yellow raycast
             bool right_hit = Physics.Raycast(origine_right, right_ray_direction, out hit_right, 100, layers);
-            //rayon gris
+            // grey raycast
             bool backwards_hit = Physics.Raycast(origine_backwards, right_ray_direction, out hit_backwards, 100, layers);
 
             sensorsDic["forward"] = hit_forward.distance;
@@ -72,6 +75,7 @@ namespace Assets.Server_controller
             sensorsDic["right"] = hit_right.distance;            
             sensorsDic["backwards"] = hit_backwards.distance;
 
+            // Creates new Messages with sensors data
             var jsonstr = new Message(103,"{\"forwardSensor\": \""+ sensorsDic["forward"] + "\", \"backwardsSensor\": \""
                 +sensorsDic["backwards"]+"\", \"leftSensor\": \""+sensorsDic["left"]+"\", \"rightSensor\": \""+sensorsDic["right"]+"\"}").ToJson();
                 
