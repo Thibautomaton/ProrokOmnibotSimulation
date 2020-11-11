@@ -2,7 +2,7 @@
 
 Simulation environnement for the developpement of algorithms for autonomous robots. 
 There is 2 characters in the simulation and an omnidirectional robot. You can control the humans. 
-Commands to the robot are received through UDP server and a videoStream for further remote treatment is send to distant server.
+Commands to the robot are received through UDP server and a videoStream for further remote treatment is send to the distant server.
 
 Here is what the simulation looks like finally:
 
